@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class CommonLibrary implements WurmServerMod {
     public static final Random random = new Random();
-    private static final String version = "0.0.1";
+    private static final String version = "0.0.2";
     @Override
     public String getVersion() {
         return version;
