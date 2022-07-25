@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class LootTable {
     public static final Random random = CommonLibrary.random;
+    public static final Logger logger = CommonLibrary.logger;
     public static final int rareChance = 10000;
     public static final int supremeChance = 100000;
     public static final int fantasticChance = 1000000;
@@ -152,7 +154,7 @@ public class LootTable {
      * @return ArrayList<Item> containing a list of the items generated
      */
     public static ArrayList<Item> createItems(ArrayList<Integer> templates)
-            throws NoSuchTemplateException, FailedException {
+            throws FailedException {
         return createItems(templates, rareChance, supremeChance, fantasticChance);
     }
     /**
@@ -164,12 +166,17 @@ public class LootTable {
      * @return ArrayList<Item> containing a list of the items generated
      */
     public static ArrayList<Item> createItems(ArrayList<Integer> templates, int rare, int supreme, int fantastic)
-            throws NoSuchTemplateException, FailedException {
+            throws FailedException {
         ArrayList<Item> items = new ArrayList<>();
 
         for(int currentTemplateId : templates) {
-            items.add(ItemFactory.createItem(currentTemplateId,
-                    randomQuality(), randomRarity(rare, supreme, fantastic), null));
+            try {
+                items.add(ItemFactory.createItem(currentTemplateId,
+                        randomQuality(), randomRarity(rare, supreme, fantastic), null));
+            }catch(NoSuchTemplateException e){
+                logger.severe("Template ID not found for: "+currentTemplateId);
+                logger.severe(e.getMessage());
+            }
         }
 
         Collections.shuffle(items);
