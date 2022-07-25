@@ -119,7 +119,7 @@ public class LootTable {
      * Returns a random quality.
      * @return A float between 0 and 100;
      */
-    private static float randomQuality(){
+    public static float randomQuality(){
         return random.nextInt(100)+random.nextFloat();
     }
 
@@ -127,7 +127,7 @@ public class LootTable {
      * Returns a random rarity.
      * @return A random byte between 0 and 3 (inclusive)
      */
-    private static byte randomRarity(){
+    public static byte randomRarity(){
         return randomRarity(rareChance, supremeChance, fantasticChance);
     }
     /**
@@ -137,7 +137,7 @@ public class LootTable {
      * @param fantastic The chance of 1 in fantastic of any of the items being Fantastic
      * @return A random byte between 0 and 3 (inclusive)
      */
-    private static byte randomRarity(int rare, int supreme, int fantastic){
+    public static byte randomRarity(int rare, int supreme, int fantastic){
         byte rarity = 0;
         if(random.nextInt(rare) == 0) rarity = 1;
         if(random.nextInt(supreme) == 0) rarity = 2;
