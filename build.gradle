@@ -1,0 +1,33 @@
+plugins {
+    id 'idea'
+    id 'java'
+}
+
+group 'org.tyoda.wurmunlimited.mods.CommonLibrary'
+version '0.0.1'
+
+repositories {
+    mavenCentral()
+    maven { url "http://gotti.no-ip.org/maven/repository"; allowInsecureProtocol(true) }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'org.gotti.wurmunlimited:server:3720466'
+    implementation 'org.gotti.wurmunlimited:common:3720466'
+    implementation 'org.gotti.wurmunlimited:server-modlauncher:0.45'
+}
+
+jar {
+    archiveFileName = "${project.name}.jar"
+}
+
+task dist(type: Zip) {
+    into("mods", {
+        into(project.name, {
+            from jar
+        })
+        from fileTree(dir: 'mods', include: '*')
+    })
+    archiveName "${project.name}-${project.version}.zip"
+}
