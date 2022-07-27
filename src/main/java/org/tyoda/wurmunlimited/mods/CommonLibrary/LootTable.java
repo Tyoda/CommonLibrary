@@ -1,6 +1,7 @@
 package org.tyoda.wurmunlimited.mods.CommonLibrary;
 
 import com.wurmonline.server.FailedException;
+import com.wurmonline.server.economy.Economy;
 import com.wurmonline.server.items.Item;
 import com.wurmonline.server.items.ItemFactory;
 import com.wurmonline.server.items.NoSuchTemplateException;
@@ -59,6 +60,8 @@ public class LootTable {
      * @return An ArrayList containing the templateIds of the generated coins.
      */
     public static ArrayList<Integer> generateCoins(int moneyPool){
+        // TODO: Economy.getEconomy().getChangeFor()???
+        // Economy.getEconomy().getChangeFor(100);
         int currentItemTemplate = 61; // gold-twenty coins
         int currentSteps = 20000000;
         ArrayList<Integer> coins = new ArrayList<>(createCoins(currentItemTemplate, moneyPool, currentSteps));
@@ -134,9 +137,9 @@ public class LootTable {
     }
     /**
      * Returns a random rarity.
-     * @param rare The chance of 1 in rare of any of the items being Rare
-     * @param supreme The chance of 1 in supreme of any of the items being Supreme
-     * @param fantastic The chance of 1 in fantastic of any of the items being Fantastic
+     * @param rare The chance of 1 in rare of any one item being Rare
+     * @param supreme The chance of 1 in supreme of any one item being Supreme
+     * @param fantastic The chance of 1 in fantastic of any one item being Fantastic
      * @return A random byte between 0 and 3 (inclusive)
      */
     public static byte randomRarity(int rare, int supreme, int fantastic){
@@ -160,9 +163,9 @@ public class LootTable {
     /**
      * Generates items of random quality and rarity from the supplied Template IDs
      * @param templates Array of Template IDs to generate items from
-     * @param rare The chance of 1 in rare of any of the items being Rare
-     * @param supreme The chance of 1 in supreme of any of the items being Supreme
-     * @param fantastic The chance of 1 in fantastic of any of the items being Fantastic
+     * @param rare The chance of 1 in rare of any one item being Rare
+     * @param supreme The chance of 1 in supreme of any one item being Supreme
+     * @param fantastic The chance of 1 in fantastic of any one item being Fantastic
      * @return ArrayList<Item> containing a list of the items generated
      */
     public static ArrayList<Item> createItems(ArrayList<Integer> templates, int rare, int supreme, int fantastic)
