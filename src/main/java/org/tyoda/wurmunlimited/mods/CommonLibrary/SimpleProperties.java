@@ -71,6 +71,18 @@ public class SimpleProperties extends Properties {
      * @param def The default value
      * @return The value in properties if it exists or the default value
      */
+    public float getFloat(String key, float def){
+        String value = getProperty(key);
+        return value == null ? def : Float.parseFloat(value);
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list.
+     * @param key The property key
+     * @param def The default value
+     * @return The value in properties if it exists or the default value
+     */
     public long getLong(String key, long def){
         String value = getProperty(key);
         return value == null ? def : Long.parseLong(value);
@@ -119,6 +131,41 @@ public class SimpleProperties extends Properties {
         int i = 0;
         for(String s : strings)
             arr[i++] = Integer.parseInt(s);
+
+        return arr;
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list. The value must be
+     * a String containing float values delimited by the string returned by
+     * getDefaultDelimiter()
+     * @param key The property key
+     * @param def The default value
+     * @return An array created from the value in properties if it exists or the default value
+     */
+    public float[] getFloatArray(String key, float[] def){
+        return getFloatArray(key, def, defaultDelimiter);
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list. The value must be
+     * a String containing float values delimited by the supplied delimiter
+     * @param key The property key
+     * @param def The default value
+     * @param delimiter The string the values are separated by
+     * @return An array created from the value in properties if it exists or the default value
+     */
+    public float[] getFloatArray(String key, float[] def, String delimiter){
+        String value = getProperty(key);
+        if(value == null) return def;
+
+        String[] strings = value.split(delimiter);
+        float[] arr = new float[strings.length];
+        int i = 0;
+        for(String s : strings)
+            arr[i++] = Float.parseFloat(s);
 
         return arr;
     }
