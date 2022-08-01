@@ -59,6 +59,30 @@ public class SimpleProperties extends Properties {
      * @param def The default value
      * @return The value in properties if it exists or the default value
      */
+    public byte getByte(String key, byte def){
+        String value = getProperty(key);
+        return value == null ? def : Byte.parseByte(value);
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list.
+     * @param key The property key
+     * @param def The default value
+     * @return The value in properties if it exists or the default value
+     */
+    public short getShort(String key, short def){
+        String value = getProperty(key);
+        return value == null ? def : Short.parseShort(value);
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list.
+     * @param key The property key
+     * @param def The default value
+     * @return The value in properties if it exists or the default value
+     */
     public int getInt(String key, int def){
         String value = getProperty(key);
         return value == null ? def : Integer.parseInt(value);
@@ -103,6 +127,76 @@ public class SimpleProperties extends Properties {
     /**
      * Gets the value associated with the key, or the default value
      * if key is not present in the properties list. The value must be
+     * a String containing byte values delimited by the string returned by
+     * getDefaultDelimiter()
+     * @param key The property key
+     * @param def The default value
+     * @return An array created from the value in properties if it exists or the default value
+     */
+    public byte[] getByteArray(String key, byte[] def){
+        return getByteArray(key, def, defaultDelimiter);
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list. The value must be
+     * a String containing byte values delimited by the supplied delimiter
+     * @param key The property key
+     * @param def The default value
+     * @param delimiter The string the values are separated by
+     * @return An array created from the value in properties if it exists or the default value
+     */
+    public byte[] getByteArray(String key, byte[] def, String delimiter){
+        String value = getProperty(key);
+        if(value == null) return def;
+
+        String[] strings = value.split(delimiter);
+        byte[] arr = new byte[strings.length];
+        int i = 0;
+        for(String s : strings)
+            arr[i++] = Byte.parseByte(s);
+
+        return arr;
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list. The value must be
+     * a String containing short values delimited by the string returned by
+     * getDefaultDelimiter()
+     * @param key The property key
+     * @param def The default value
+     * @return An array created from the value in properties if it exists or the default value
+     */
+    public short[] getShortArray(String key, short[] def){
+        return getShortArray(key, def, defaultDelimiter);
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list. The value must be
+     * a String containing short values delimited by the supplied delimiter
+     * @param key The property key
+     * @param def The default value
+     * @param delimiter The string the values are separated by
+     * @return An array created from the value in properties if it exists or the default value
+     */
+    public short[] getShortArray(String key, short[] def, String delimiter){
+        String value = getProperty(key);
+        if(value == null) return def;
+
+        String[] strings = value.split(delimiter);
+        short[] arr = new short[strings.length];
+        int i = 0;
+        for(String s : strings)
+            arr[i++] = Short.parseShort(s);
+
+        return arr;
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list. The value must be
      * a String containing integers delimited by the string returned by
      * getDefaultDelimiter()
      * @param key The property key
@@ -131,6 +225,41 @@ public class SimpleProperties extends Properties {
         int i = 0;
         for(String s : strings)
             arr[i++] = Integer.parseInt(s);
+
+        return arr;
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list. The value must be
+     * a String containing long values delimited
+     * by the character the string returned by getDefaultDelimiter()
+     * @param key The property key
+     * @param def The default value
+     * @return An array created from the value in properties if it exists or the default value
+     */
+    public long[] getLongArray(String key, long[] def){
+        return getLongArray(key, def, defaultDelimiter);
+    }
+
+    /**
+     * Gets the value associated with the key, or the default value
+     * if key is not present in the properties list. The value must be
+     * a String containing long values delimited by the supplied delimiter
+     * @param key The property key
+     * @param def The default value
+     * @param delimiter The string the values are separated by
+     * @return An array created from the value in properties if it exists or the default value
+     */
+    public long[] getLongArray(String key, long[] def, String delimiter){
+        String value = getProperty(key);
+        if(value == null) return def;
+
+        String[] strings = value.split(delimiter);
+        long[] arr = new long[strings.length];
+        int i = 0;
+        for(String s : strings)
+            arr[i++] = Long.parseLong(s);
 
         return arr;
     }
@@ -232,41 +361,6 @@ public class SimpleProperties extends Properties {
         if(value == null) return def;
 
         return value.split(delimiter);
-    }
-
-    /**
-     * Gets the value associated with the key, or the default value
-     * if key is not present in the properties list. The value must be
-     * a String containing long values delimited
-     * by the character the string returned by getDefaultDelimiter()
-     * @param key The property key
-     * @param def The default value
-     * @return An array created from the value in properties if it exists or the default value
-     */
-    public long[] getLongArray(String key, long[] def){
-        return getLongArray(key, def, defaultDelimiter);
-    }
-
-    /**
-     * Gets the value associated with the key, or the default value
-     * if key is not present in the properties list. The value must be
-     * a String containing long values delimited by the supplied delimiter
-     * @param key The property key
-     * @param def The default value
-     * @param delimiter The string the values are separated by
-     * @return An array created from the value in properties if it exists or the default value
-     */
-    public long[] getLongArray(String key, long[] def, String delimiter){
-        String value = getProperty(key);
-        if(value == null) return def;
-
-        String[] strings = value.split(delimiter);
-        long[] arr = new long[strings.length];
-        int i = 0;
-        for(String s : strings)
-            arr[i++] = Long.parseLong(s);
-
-        return arr;
     }
 }
 

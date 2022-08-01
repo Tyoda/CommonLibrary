@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.tyoda.wurmunlimited.mods.CommonLibrary'
-version '0.0.5'
+version '0.0.6'
 
 repositories {
     mavenCentral()
@@ -12,9 +12,20 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
+var serverJar = files("/media/tyoda/Files/w/p/wurmmods/libraries/server.jar")
+var commonJar = files("/media/tyoda/Files/w/p/wurmmods/libraries/common.jar")
+
 dependencies {
-    implementation 'org.gotti.wurmunlimited:server:3720466'
-    implementation 'org.gotti.wurmunlimited:common:3720466'
+    if(serverJar){
+        implementation(serverJar)
+    }else{
+        implementation 'org.gotti.wurmunlimited:server:3720466'
+    }
+    if(commonJar){
+        implementation(commonJar)
+    }else{
+        implementation 'org.gotti.wurmunlimited:common:3720466'
+    }
     implementation 'org.gotti.wurmunlimited:server-modlauncher:0.45'
 }
 
