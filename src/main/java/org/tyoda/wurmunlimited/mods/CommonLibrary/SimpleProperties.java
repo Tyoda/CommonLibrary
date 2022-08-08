@@ -7,7 +7,7 @@ public class SimpleProperties extends Properties {
      * The delimiter used by array functions if one
      * is not set manually
      */
-    private String defaultDelimiter = ";";
+    private String defaultDelimiter = ",";
 
     /**
      * Initializes a SimpleProperties with the values in the
