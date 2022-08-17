@@ -1,6 +1,7 @@
 package org.tyoda.wurmunlimited.mods.CommonLibrary;
 
 import com.wurmonline.server.FailedException;
+import com.wurmonline.server.economy.Economy;
 import com.wurmonline.server.items.Item;
 import com.wurmonline.server.items.ItemFactory;
 import com.wurmonline.server.items.NoSuchTemplateException;
@@ -14,6 +15,20 @@ import java.util.logging.Logger;
 public class LootTable {
     public static final Random random = CommonLibrary.random;
     public static final Logger logger = CommonLibrary.logger;
+
+    public static final int ironPenny = 1;
+    public static final int ironFive = 5;
+    public static final int ironTwenty = 20;
+    public static final int copperPenny = ironPenny * 100;
+    public static final int copperFive = ironFive * 100;
+    public static final int copperTwenty = ironTwenty * 100;
+    public static final int silverPenny = copperPenny * 100;
+    public static final int silverFive = copperFive * 100;
+    public static final int silverTwenty = copperTwenty * 100;
+    public static final int goldPenny = silverPenny * 100;
+    public static final int goldFive = silverFive * 100;
+    public static final int goldTwenty = silverTwenty * 100;
+
     private float rareChance = 0.0001f;
     private float supremeChance = 0.00001f;
     private float fantasticChance = 0.000001f;
@@ -54,60 +69,51 @@ public class LootTable {
     }
 
     /**
-     * Returns the appropriate types of coins for a given value.
+     * Returns the appropriate types of coins for a given value. It will be
+     * the fewest possible coins for that value.
      * @param moneyPool The value of the coins to be generated.
      * @return An ArrayList containing the templateIds of the generated coins.
      */
     public static ArrayList<Integer> generateCoins(int moneyPool){
-        // TODO: Economy.getEconomy().getChangeFor()???
-        // Economy.getEconomy().getChangeFor(100);
+        // Probably could use this guy below but idk
+        // Economy.getEconomy().getCoinsFor(moneyPool);
+
         int currentItemTemplate = 61; // gold-twenty coins
-        int currentSteps = 20000000;
-        ArrayList<Integer> coins = new ArrayList<>(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        ArrayList<Integer> coins = new ArrayList<>(createCoins(currentItemTemplate, moneyPool, goldTwenty));
+        moneyPool %= goldTwenty;
         currentItemTemplate = 57; // gold-five coins
-        currentSteps = 5000000;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, goldFive));
+        moneyPool %= goldFive;
         currentItemTemplate = 53; // gold coins
-        currentSteps = 1000000;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, goldPenny));
+        moneyPool %= goldPenny;
         currentItemTemplate = 60; // silver-twenty coins
-        currentSteps = 200000;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, silverTwenty));
+        moneyPool %= silverTwenty;
         currentItemTemplate = 56; // silver-five coins
-        currentSteps = 50000;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, silverFive));
+        moneyPool %= silverFive;
         currentItemTemplate = 52; // silver coins
-        currentSteps = 10000;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, silverPenny));
+        moneyPool %= silverPenny;
         currentItemTemplate = 58; // copper-twenty coins
-        currentSteps = 2000;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, copperTwenty));
+        moneyPool %= copperTwenty;
         currentItemTemplate = 54; // copper-five coins
-        currentSteps = 500;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, copperFive));
+        moneyPool %= copperFive;
         currentItemTemplate = 50; // copper coins
-        currentSteps = 100;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, copperPenny));
+        moneyPool %= copperPenny;
         currentItemTemplate = 59; // iron-twenty coins
-        currentSteps = 20;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, ironTwenty));
+        moneyPool %= ironTwenty;
         currentItemTemplate = 55; // iron-five coins
-        currentSteps = 5;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
-        moneyPool %= currentSteps;
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, ironFive));
+        moneyPool %= ironFive;
         currentItemTemplate = 51; // iron coins
-        currentSteps = 1;
-        coins.addAll(createCoins(currentItemTemplate, moneyPool, currentSteps));
+        coins.addAll(createCoins(currentItemTemplate, moneyPool, ironPenny));
+
         return coins;
     }
     private static ArrayList<Integer> createCoins(int templateId, int moneyPool, int steps){

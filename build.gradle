@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.tyoda.wurmunlimited.mods.CommonLibrary'
-version '0.1'
+version '0.1.1'
 
 repositories {
     mavenCentral()
@@ -26,7 +26,7 @@ dependencies {
     }else{
         implementation 'org.gotti.wurmunlimited:common:3720466'
     }
-    implementation 'org.gotti.wurmunlimited:server-modlauncher:0.45'
+    compileOnly 'org.gotti.wurmunlimited:server-modlauncher:0.45'
 }
 
 jar {
